@@ -58,6 +58,7 @@ import { ListArchitComponent } from './list-archit/list-archit.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { TerraformCodeDialogComponent } from './terraform-code-dialog/terraform-code-dialog.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 @NgModule({
@@ -78,7 +79,6 @@ import { TerraformCodeDialogComponent } from './terraform-code-dialog/terraform-
     RessourceGroupComponent,
     VmssComponent,
     ApplicationGatewayComponent,
-    
     ArhcitectureComponent,
     OsMachineComponent,
     AddOsMachineComponent,
@@ -122,6 +122,7 @@ import { TerraformCodeDialogComponent } from './terraform-code-dialog/terraform-
     ToastModule,
     MdbModalModule,
     DropdownModule,
+    NgApexchartsModule,
     NgxWebstorageModule.forRoot(),
   ],
   providers: [httpInterceptorProviders, provideAnimationsAsync(),MdbModalService],

@@ -40,10 +40,17 @@
           <td>{{ diskSize.numberOfCores }}</td>
           <td>{{ diskSize.osDiskSizeInMB }}</td>
           <td>{{ diskSize.resourceDiskSizeInMB }}</td>
-          <td>             
-            <button class="btn btn-danger" (click)="deleteDiskSize(diskSize.id)">Supprimer</button>
+          <td >             
+            <button class="btn btn-danger" (click)="deleteDiskSize(diskSize.id)"><span>
+              <i class="ti ti-trash"></i>
+
+            </span></button>
             &nbsp;
-            <button class="btn btn-primary" (click)="openUpdateDiskSizeDialog(diskSize)">Update</button>
+
+            <button class="btn btn-primary" (click)="openUpdateDiskSizeDialog(diskSize)"><span>
+              <i class="ti ti-settings"></i>
+
+            </span></button>
           </td>             
         </tr>
       </tbody>

@@ -31,4 +31,7 @@ export class UpdateRegionComponent {
       }
     });
   }
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 }

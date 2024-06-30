@@ -1,6 +1,6 @@
-<div class="container">
-    <h2>Modifier l'image</h2>
-  
+
+  <h2 mat-dialog-title>Modifier l'image</h2>
+  <mat-dialog-content>
     <form (ngSubmit)="updateImage()">
       <div class="form-group">
         <label for="architecture">Architecture:</label>
@@ -30,9 +30,10 @@
         <label for="version">Version:</label>
         <input type="text" class="form-control" id="version" [(ngModel)]="image.version" name="version">
       </div>
-      
+      <div class="dialog-actions">
       <button type="submit" class="btn btn-primary">Modifier</button>
-      
+      <button type="button" class="btn btn-secondary" (click)="closeDialog()">Fermer</button>
+    </div>
     </form>
-  </div>
+  </mat-dialog-content>
   

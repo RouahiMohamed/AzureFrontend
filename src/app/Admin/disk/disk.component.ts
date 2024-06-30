@@ -5,7 +5,7 @@ import { DiskSizeService } from '../../_services/disk-size.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { RegionService } from '../../_services/region.service';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 @Component({
   selector: 'app-disk',
   templateUrl: './disk.component.html',
@@ -35,18 +35,24 @@ export class DiskComponent implements OnInit {
   }
   
   openUpdateDiskSizeDialog(diskSize: any): void {
-    const dialogRef = this.dialog.open(UpdateDiskComponent, {
-      width: '500px', // Ajuster la largeur selon vos besoins
-      data: { diskSize } // Passer la taille de disque sélectionnée à la boîte de dialogue de mise à jour
-    });
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = { diskSize };
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50vw'; // Largeur du dialogue
+    dialogConfig.maxWidth = '100vw'; // Largeur maximale
+    dialogConfig.position = { top: '-125%', left: '25%' };
+    dialogConfig.position = { top: '-125vh', left: '25vw' };
+     
+     const dialogRef = this.dialog.open(UpdateDiskComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('La boîte de dialogue a été fermée');
-      if (result) {
-        // Si la boîte de dialogue a été fermée avec un résultat, actualiser la liste des tailles de disque
-        this.fetchDiskSizes();
-      }
-    });
+     dialogRef.afterClosed().subscribe(result => {
+       console.log('La boîte de dialogue a été fermée');
+       if (result) {
+         // Si la boîte de dialogue a été fermée avec un résultat, actualiser la liste des tailles de disque
+         this.fetchDiskSizes();
+       }
+     });
   }
   
   

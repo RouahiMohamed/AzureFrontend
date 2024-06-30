@@ -44,10 +44,16 @@
               <td>{{ image.urn }}</td>
               <td>{{ image.urnAlias }}</td>
               <td>{{ image.version }}</td>
-              <td>             
-                <button class="btn btn-danger"  (click)="deleteImage(image.id)">Supprimer</button>
+              <td width="50px">             
+                <button class="btn btn-danger"  (click)="deleteImage(image.id)"><span>
+                  <i class="ti ti-trash"></i>
+    
+                </span></button>
                 &nbsp;
-                <button class="btn btn-primary" (click)="openUpdateImageDialog(image)">Modifier</button>
+                <button class="btn btn-primary" (click)="openUpdateImageDialog(image)"><span>
+                  <i class="ti ti-trash"></i>
+    
+                </span></button>
               </td>             
             </tr>
           </tbody>

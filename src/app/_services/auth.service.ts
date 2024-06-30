@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class AuthService {
 
-  private AUTH_API = 'http://localhost:8093/api/auth/';
+ 
   private isLoggedInVar: boolean = false;
   constructor(private http: HttpClient) {}
 

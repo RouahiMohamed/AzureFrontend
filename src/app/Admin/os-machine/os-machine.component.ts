@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { VMImageService } from '../../_services/images.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddOsMachineComponent } from '../add-os-machine/add-os-machine.component';
 import { UpdateOsMachineComponent } from '../update-os-machine/update-os-machine.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
@@ -71,15 +71,16 @@ export class OsMachineComponent implements OnInit {
   }
 
   openUpdateImageDialog(image: any): void {
-    const dialogRef = this.dialog.open(UpdateOsMachineComponent, {
-      width: '500px',
-      data: { image },
-      position: {
-        top: '10px', // Ajustez la position verticale selon vos besoins
-        left: '50%' // Positionnez la boîte de dialogue au centre horizontalement
-      }
-    });
-  
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = { image };
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50vw'; // Largeur du dialogue
+    dialogConfig.maxWidth = '100vw'; // Largeur maximale
+    dialogConfig.position = { top: '-125%', left: '25%' };
+    dialogConfig.position = { top: '-125vh', left: '25vw' };
+    
+     const dialogRef = this.dialog.open(UpdateOsMachineComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result) {

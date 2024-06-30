@@ -1,8 +1,14 @@
 .page-wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cards-container {
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 1rem;
 }
 
 .card {
@@ -10,19 +16,19 @@
   --primary-color: #7257fa;
   --secondary-color: #3c3852;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
-  width: 100%;
-  max-width: 600px;
+  width: calc(45% - 1rem); /* 50% width minus the gap */
+  max-width: 650px;
   font-family: "Arial";
   padding: 1rem;
   cursor: pointer;
   border-radius: var(--border-radius);
-  background: #f1f1f3;
-  box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
+  background: #fefeff;
+  box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 10%);
   position: relative;
-  margin: 1rem;
+  margin: 0.5rem;
 }
 
 .card-content {
@@ -33,10 +39,10 @@
 }
 
 .card__title {
-  padding: 0;
+  padding-left: 15rem;
   font-size: 1.3rem;
   font-weight: bold;
-  color: var(--secondary-color);
+  color: #3498db; 
   margin-bottom: 0.5rem;
 }
 
@@ -45,11 +51,6 @@
   font-size: 0.86rem;
   margin-bottom: 0.5rem;
   text-align: left;
-}
-
-.card__date {
-  color: #6e6b80;
-  font-size: 0.8rem;
 }
 
 .card__arrow {
@@ -64,6 +65,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.card__cost-estimation {
+  font-weight: bold;
+  color: #3498db; 
+}
+
+.card__date {
+  font-weight: bold;
+  color: #3498db; 
+  text-align: right;
+  margin-left: auto; /* Pushes date to the right */
+  padding-right: 1.5rem; /* Adjust the padding to move date slightly left */
 }
 
 .card svg {

@@ -16,6 +16,7 @@
         </div>
       </li>
       <input type="text" [(ngModel)]="architectureName" placeholder="Nom de l'architecture" class="form-control mb-2">
+      <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
       <button class="btn btn-primary mb-3" (click)="createArchitecture()"> Créer l'architecture</button>
     </ul>
   

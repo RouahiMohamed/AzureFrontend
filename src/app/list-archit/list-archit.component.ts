@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArchitectureService } from '../_services/architecture.service';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { TerraformCodeDialogComponent } from '../terraform-code-dialog/terraform-code-dialog.component';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-list-archit',
@@ -12,9 +10,8 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 })
 export class ListArchitComponent implements OnInit {
   architectures: any[] = [];
-  modalRef: MdbModalRef<TerraformCodeDialogComponent> | null = null;
-  constructor(private modalService: MdbModalService, private architectureService: ArchitectureService) { }
 
+  constructor(private architectureService: ArchitectureService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadArchitectures();
@@ -25,12 +22,20 @@ export class ListArchitComponent implements OnInit {
       this.architectures = data;
     });
   }
-  viewDetails(id: string): void {
-    this.architectureService.getArchitecture(id).subscribe(architecture => {
-      this.modalRef = this.modalService.open(TerraformCodeDialogComponent, {
-        data: { terraformCode: architecture.terraformCode }
-      });
-    });
-  }
 
+  viewDetails(architecture: any): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = { architecture };
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50vw'; // Largeur du dialogue
+    dialogConfig.maxWidth = '100vw'; // Largeur maximale
+    dialogConfig.position = { top: '-50%', left: '25%' };
+    dialogConfig.position = { top: '-50vh', left: '25vw' };
+  
+    dialogConfig.panelClass = 'custom-dialog-container'; 
+  
+    this.dialog.open(TerraformCodeDialogComponent, dialogConfig);
+  }
+  
 }

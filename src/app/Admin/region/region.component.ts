@@ -4,7 +4,7 @@ import { RegionService } from '../../_services/region.service';
 import { AddRegionComponent } from '../add-region/add-region.component';
 import { UpdateRegionComponent } from '../update-region/update-region.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 @Component({
   selector: 'app-region',
   templateUrl: './region.component.html',
@@ -52,18 +52,24 @@ modalRef: MdbModalRef<AddRegionComponent> | null = null;
   }
 
  openUpdateRegionDialog(region: any): void {
-    const dialogRef = this.dialog.open(UpdateRegionComponent, {
-      width: '500px', // ajustez la largeur selon vos besoins
-      data: { region } // passez la région sélectionnée à la boîte de dialogue de mise à jour
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      if (result) {
-        // Si la boîte de dialogue a été fermée avec un résultat, actualisez la liste des régions
-        this.fetchRegions();
-      }
-    });
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = { region };
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '50vw'; // Largeur du dialogue
+      dialogConfig.maxWidth = '100vw'; // Largeur maximale
+      dialogConfig.position = { top: '-125%', left: '25%' };
+      dialogConfig.position = { top: '-125vh', left: '25vw' };
+      
+       const dialogRef = this.dialog.open(UpdateRegionComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        if (result) {
+          // Si la boîte de dialogue a été fermée avec un résultat, actualisez la liste des images
+          this.fetchRegions();
+        }
+      });
+    
   }
 
   openAddRegionDialog(): void {

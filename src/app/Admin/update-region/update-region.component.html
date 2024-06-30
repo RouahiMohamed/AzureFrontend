@@ -1,6 +1,6 @@
-<div class="container">
-    <h2>Modifier la région</h2>
-  
+
+<h2 mat-dialog-title>Modifier la région</h2>
+    <mat-dialog-content>
     <form (ngSubmit)="updateRegion()">
       <div class="form-group">
         <label for="displayName">Display Name:</label>
@@ -14,8 +14,10 @@
         <label for="regionalDisplayName">Regional Display Name:</label>
         <input type="text" class="form-control" id="regionalDisplayName" [(ngModel)]="region.regionalDisplayName" name="regionalDisplayName">
       </div>
-  
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-secondary" (click)="closeDialog()">Fermer</button>
       <button type="submit" class="btn btn-primary">Modifier</button>
-    </form>
-  </div>
+    </div>
+  </form>
+</mat-dialog-content>
   

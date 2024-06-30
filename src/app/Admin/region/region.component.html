@@ -41,10 +41,16 @@
                 <td>{{ region.regionalDisplayName }}</td>
                 <td>
                   <!-- Actions Column -->
-                  <button class="btn btn-danger" (click)="deleteRegion(region.id)">Delete</button>
+                  <button class="btn btn-danger" (click)="deleteRegion(region.id)"><span>
+                    <i class="ti ti-trash"></i>
+      
+                  </span></button>
                   &nbsp;
                  
-                 <button class="btn btn-primary" (click)="openUpdateRegionDialog(region)">Update</button>
+                 <button class="btn btn-primary" (click)="openUpdateRegionDialog(region)"><span>
+                  <i class="ti ti-trash"></i>
+    
+                </span></button>
 
                   
                 </td>

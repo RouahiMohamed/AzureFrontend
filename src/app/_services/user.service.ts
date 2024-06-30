@@ -3,9 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http'; // Assurez-vous d'ajuster le chemin d'importation en fonction de votre structure de fichiers
 
-export const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 const API_URL = 'http://localhost:8093/api/test/';
 
 @Injectable({

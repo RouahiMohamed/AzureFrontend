@@ -35,7 +35,11 @@ export class ProfileComponent implements OnInit {
     this.authService.updatePassword(this.currentUser.username, this.passwordForm)
       .subscribe(
         response => {
-          this.message = response.message; // Assuming backend returns an object with a 'message' key
+          this.message = response.message;
+          setTimeout(() => {
+            this.message = '';
+          }, 3000)
+           // Assuming backend returns an object with a 'message' key
           this.passwordUpdated = true; // Set passwordUpdated to true on successful password update
           // Reset the form
           this.passwordForm = {
@@ -45,7 +49,10 @@ export class ProfileComponent implements OnInit {
           };
         },
         error => {
-          this.message = error.error.message; // Assuming backend returns an error with an object containing a 'message' key
+          this.message = error.error.message;
+          setTimeout(() => {
+            this.message = '';
+          }, 3000);  // Assuming backend returns an error with an object containing a 'message' key
         }
       );
   }

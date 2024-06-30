@@ -27,6 +27,7 @@ currentUser: any;
 pulumiCode!: string;
 terraformCode!: string;
 architectureId!: string ;
+errorMessage!: string ;
 selectedCodeType: string = 'pulumi'; 
 costEstimation: any;
 architectureName: string = '';
@@ -161,6 +162,13 @@ architectureName: string = '';
     return 'rotate(0deg)';
   }
   createArchitecture():void {
+    if (!this.architectureName || this.architectureName.trim() === '') {
+      this.errorMessage = 'Please enter the architecture name.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000); // Clear the error message after 1 second
+      return;
+    }
     const architecture = {
       name: this.architectureName,  
       dateCreation: new Date(),
@@ -170,7 +178,10 @@ architectureName: string = '';
       virtualMachines: []as any[],
       virtualNetworks: []as any[],
       applicationGateways: []as any[],
-      subnets: []as any[]
+      subnets: []as any[],
+      costEstimation: this.costEstimation,
+      PulumiCode: this.pulumiCode,
+      terraformCode: this.terraformCode,
     };
 
     for (const component of this.placedComponents) {
@@ -226,22 +237,45 @@ architectureName: string = '';
             }
     }
     if (this.architectureId) {
-      this.architectureService.updateArchitecture(this.architectureId, architecture).subscribe(response => {
-        console.log('Architecture updated successfully:', response);
-        this.refreshArchitecture(response.id);
-      }, error => {
-        console.error('Error updating architecture:', error);
-      });
-    } else  {
-      this.architectureService.createArchitecture(architecture).subscribe(response => {
-        console.log('Architecture created successfully:', response);
-        this.architectureId = response.id;
-        this.refreshArchitecture(response.id);
-      }, error => {
-        console.error('Error creating architecture:', error);
-      });
-    }
+    this.architectureService.updateArchitecture(this.architectureId, architecture).subscribe(response => {
+      console.log('Architecture updated successfully:', response);
+      this.generateCodesAndSave(response.id);
+    }, error => {
+      console.error('Error updating architecture:', error);
+    });
+  } else {
+    this.architectureService.createArchitecture(architecture).subscribe(response => {
+      console.log('Architecture created successfully:', response);
+      this.architectureId = response.id;
+      this.generateCodesAndSave(response.id);
+    }, error => {
+      console.error('Error creating architecture:', error);
+    });
   }
+}
+
+generateCodesAndSave(architectureId: string) {
+  this.architectureService.getArchitecture(architectureId).subscribe(architecture => {
+    this.architectureService.generatePulumiCode(architecture).subscribe(pulumiCode => {
+      architecture.pulumiCode = pulumiCode;
+      this.architectureService.generateTerraformCode(architecture).subscribe(terraformCode => {
+        architecture.terraformCode = terraformCode;
+        this.architectureService.updateArchitecture(architectureId, architecture).subscribe(updatedResponse => {
+          console.log('Codes generated and saved successfully:', updatedResponse);
+          this.refreshArchitecture(updatedResponse.id);
+        }, updateError => {
+          console.error('Error saving generated codes:', updateError);
+        });
+      }, terraformError => {
+        console.error('Error generating Terraform code:', terraformError);
+      });
+    }, pulumiError => {
+      console.error('Error generating Pulumi code:', pulumiError);
+    });
+  }, getError => {
+    console.error('Error fetching architecture:', getError);
+  });
+}
 
   refreshArchitecture(id: string) {
     this.architectureService.getArchitecture(id).subscribe(architecture => {
@@ -264,17 +298,31 @@ generateTerraformCode(architecture: any) {
 }
 estimateCosts() {
   const body = {
-      terraformCode: this.terraformCode
+    terraformCode: this.terraformCode
   };
-  this.http.post('http://localhost:8093/api/architectures/estimateCost', body, { responseType: 'text' })
-      .subscribe(response => {
-          this.costEstimation = response;
-      }, error => {
-          console.error('Erreur lors de l\'estimation des coûts', error);
-      });
+  this.http.post<any>('http://localhost:8093/api/architectures/estimateCost', body)
+    .subscribe(response => {
+      this.costEstimation = response.totalCost;
+      this.saveCostEstimation(response.totalCost.toString());
+    }, error => {
+      console.error('Erreur lors de l\'estimation des coûts', error);
+    });
 }
 
-
+saveCostEstimation(costEstimation: string) {
+  if (this.architectureId) {
+    const body = {
+      costEstimation: costEstimation
+    };
+    this.architectureService.saveCostEstimation(this.architectureId, body).subscribe(response => {
+      console.log('Cost estimation saved successfully:', response);
+    }, error => {
+      console.error('Error saving cost estimation:', error);
+    });
+  } else {
+    console.error('Architecture ID is not set.');
+  }
+}
 }
 
 

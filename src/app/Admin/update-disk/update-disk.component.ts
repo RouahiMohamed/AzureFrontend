@@ -42,4 +42,7 @@ export class UpdateDiskComponent implements OnInit {
       }
     });
   }
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 }

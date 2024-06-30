@@ -11,3 +11,6 @@
     font-size: 14px;
     color: #777; /* Couleur grise */
 }
+.hide-menu {
+    color: #3498db; /* Change la couleur du texte en bleu */
+}

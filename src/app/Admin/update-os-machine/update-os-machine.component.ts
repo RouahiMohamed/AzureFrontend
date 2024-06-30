@@ -31,4 +31,7 @@
         }
       });
     }
+    closeDialog(): void {
+      this.dialogRef.close();
+    }
   }

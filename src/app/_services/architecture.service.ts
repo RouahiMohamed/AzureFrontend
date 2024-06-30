@@ -4,10 +4,8 @@ import { Observable } from 'rxjs';
 
 const API_URL = 'http://localhost:8093/api/architectures/';
 
-const token = localStorage.getItem('access_token');
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json',
-  'Authorization': `Bearer ${token}` }) 
+  headers: new HttpHeaders({ 'Content-Type': 'application/json'}) 
 };
 
 @Injectable({
@@ -42,6 +40,9 @@ export class ArchitectureService {
   }
   estimateCosts(terraformCode: string): Observable<any> {
     return this.http.post(API_URL + 'estimateCost', { terraformDirectory: terraformCode }, httpOptions);
+}
+saveCostEstimation(architectureId: string, body: any): Observable<any> {
+  return this.http.post(API_URL + `saveCostEstimation/${architectureId}`, body, httpOptions);
 }
 
 }

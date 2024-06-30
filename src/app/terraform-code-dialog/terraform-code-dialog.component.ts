@@ -1,15 +1,25 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-terraform-code-dialog',
   templateUrl: './terraform-code-dialog.component.html',
-  styleUrl: './terraform-code-dialog.component.css'
+  styleUrls: ['./terraform-code-dialog.component.css']
 })
-export class TerraformCodeDialogComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { terraformCode: string },public modalRef: MdbModalRef<TerraformCodeDialogComponent>) { }
+export class TerraformCodeDialogComponent  {
+  architecture: any;
+  selectedCodeType: string = 'pulumi';
 
-  onClose(): void {
+  constructor(public dialogRef: MatDialogRef<TerraformCodeDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.architecture = data.architecture;
+  }
+  onCodeTypeChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedCodeType = selectElement.value;
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 }
