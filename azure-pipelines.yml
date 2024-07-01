@@ -21,8 +21,9 @@ steps:
 - script: |
     npm install -g @angular/cli
     npm install --legacy-peer-deps
+    npm audit fix
     ng build --configuration=production
-  displayName: 'npm install and build'
+  displayName: 'npm install, audit fix, and build'
 
 - script: |
     echo "##vso[task.setvariable variable=imageVersion]$((${{ variables.imageVersion }} + 1))"
@@ -35,3 +36,4 @@ steps:
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'version-$(imageVersion)'
+
